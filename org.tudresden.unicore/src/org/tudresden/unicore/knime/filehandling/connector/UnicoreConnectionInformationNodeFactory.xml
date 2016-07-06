@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="/unicoreIcon48x48.png" type="Source">
+    <name>Unicore Connector</name>
+
+    <shortDescription>
+        Configures the connection information used to connect to a remote host.
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            This node retrieves the connection information from the global unicore preferences pane.
+        </intro>
+    </fullDescription>
+
+    <ports>
+        <outPort name="Connection information port" index="0">
+            Port object containing the connection information.
+        </outPort>
+    </ports>
+</knimeNode>

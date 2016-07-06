@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension point="org.knime.core.NodeExecutionJobManagerFactory">
+      <NodeExecutionJobManagerFactory
+            JobManagerFactory="org.tudresden.unicore.knime.UnicoreNodeExecutionJobManagerFactory">
+      </NodeExecutionJobManagerFactory>
+   </extension>
+   
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.knime.workbench.ui.preferences"
+            class="org.tudresden.unicore.knime.executor.settings.UnicorePreferencePage"
+            id="org.tudresden.unicore.knime.executor.settings.UnicorePreferencePage"
+            name="Unicore Settings">
+      </page>
+   </extension>
+   
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.tudresden.unicore.knime.executor.settings.UnicorePreferenceInitializer">
+      </initializer>
+   </extension>
+   
+      <extension point="org.knime.workbench.repository.nodes">
+		<node
+        category-path="/unicore"
+        deprecated="false"
+        factory-class="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationNodeFactory"
+        id="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationNodeFactory"/>
+		<node
+        category-path="/unicore"
+        deprecated="false"
+        factory-class="org.tudresden.unicore.knime.filehandling.integration.UnicoreFileIntegrationNodeFactory"
+        id="org.tudresden.unicore.knime.filehandling.integration.UnicoreFileIntegrationNodeFactory"/>   
+   </extension>
+  
+   <extension
+         id="org.tudresden.unicore.knime.filehandling.UnicoreRemoteFileHandler"
+         point="org.knime.base.filehandling.RemoteFileHandler">
+      <RemoteFileHandler
+            RemoteFileHandler="org.tudresden.unicore.knime.filehandling.UnicoreRemoteFileHandler">
+      </RemoteFileHandler>
+   </extension>
+   <extension
+         point="org.knime.workbench.repository.categories">
+      <category
+            icon="src/unicoreIcon48x48.png"
+            level-id="unicore"
+            locked="true"
+            name="Unicore"
+            path="/">
+      </category>
+   </extension>
+   <extension
+         point="org.knime.core.PortType">
+      <portType
+            hidden="false"
+            name=" Unicore Port"
+            objectClass="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationPortObject"
+            objectSerializer="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationPortObject$Serializer"
+            specClass="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationPortObjectSpec"
+            specSerializer="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationPortObjectSpec$Serializer">
+      </portType>
+   </extension>
+   <extension
+         point="org.knime.core.DataType">
+      <DataType
+            cellClass="org.tudresden.unicore.knime.filehandling.integration.UnicoreRemoteFileDataCell">
+         <serializer
+               cellClass="org.tudresden.unicore.knime.filehandling.integration.UnicoreRemoteFileDataCell"
+               serializerClass="org.tudresden.unicore.knime.filehandling.integration.UnicoreRemoteFileDataCell$UnicoreRemoteFileDataCellSerializer">
+         </serializer>
+      </DataType>
+   </extension>
+   
+   
+
+</plugin>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="TUD KNIME Unicore Cluster Extension Feature"
+      label="TUD KNIME Unicore Cluster Extension Feature"
+      version="0.5.8.qualifier"
+      provider-name="TU Dresden">
+
+   <description url="https://tu-dresden.de/">
+      KNIME Unicore Cluster Extension
+   </description>
+
+   <license url="https://www.gnu.org/licenses/gpl-3.0.en.html">
+      This software is licensed under General Public License (GPL), Version 3.
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime" version="3.6.0" match="compatible"/>
+      <import plugin="org.knime.workbench.core"/>
+      <import plugin="org.knime.workbench.repository"/>
+      <import plugin="org.knime.base" /> <!--version="3.2.0" match="greaterOrEqual"/>-->
+      <import plugin="org.glassfish.javax.json"/>
+      <import plugin="org.knime.base.filehandling"/>
+      <import plugin="org.knime.core.data.uritype"/>
+      <import plugin="javax.ws.rs-api" version="2.0.1" match="greaterOrEqual"/>
+      <import plugin="org.knime.cluster" /> <!--version="3.2.0" match="greaterOrEqual"/> -->
+      <import plugin="org.knime.core" /> <!--version="3.2.0" match="greaterOrEqual"/> -->
+      <import feature="org.knime.features.base" version="3.1.0.v201512031304"/>
+   </requires>
+
+   <plugin
+         id="org.tudresden.unicore"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.ws.rs-api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.glassfish.javax.json"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

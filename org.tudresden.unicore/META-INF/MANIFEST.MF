@@ -1,0 +1,47 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Unicore Cluster Extension
+Bundle-SymbolicName: org.tudresden.unicore;singleton:=true
+Bundle-Version: 0.5.8.qualifier
+Bundle-ClassPath: .,
+ unicoreconnector.jar,
+ lib/jaxrs-ri/lib/jersey-client.jar,
+ lib/jaxrs-ri/lib/jersey-common.jar,
+ lib/jaxrs-ri/lib/jersey-container-servlet-core.jar,
+ lib/jaxrs-ri/lib/jersey-container-servlet.jar,
+ lib/jaxrs-ri/lib/jersey-media-jaxb.jar,
+ lib/jaxrs-ri/lib/jersey-server.jar,
+ lib/jaxrs-ri/ext/aopalliance-repackaged-2.4.0-b31.jar,
+ lib/jaxrs-ri/ext/asm-debug-all-5.0.4.jar,
+ lib/jaxrs-ri/ext/hk2-api-2.4.0-b31.jar,
+ lib/jaxrs-ri/ext/hk2-locator-2.4.0-b31.jar,
+ lib/jaxrs-ri/ext/hk2-utils-2.4.0-b31.jar,
+ lib/jaxrs-ri/ext/javassist-3.18.1-GA.jar,
+ lib/jaxrs-ri/ext/javax.annotation-api-1.2.jar,
+ lib/jaxrs-ri/ext/javax.inject-2.4.0-b31.jar,
+ lib/jaxrs-ri/ext/javax.servlet-api-3.0.1.jar,
+ lib/jaxrs-ri/ext/jaxb-api-2.2.7.jar,
+ lib/jaxrs-ri/ext/jersey-guava-2.22.1.jar,
+ lib/jaxrs-ri/ext/org.osgi.core-4.2.0.jar,
+ lib/jaxrs-ri/ext/osgi-resource-locator-1.0.1.jar,
+ lib/jaxrs-ri/ext/persistence-api-1.0.jar,
+ lib/jaxrs-ri/ext/validation-api-1.1.0.Final.jar,
+ lib/jaxrs-ri/api/javax.ws.rs-api-2.0.1.jar
+Bundle-Vendor: TU Dresden
+Require-Bundle: org.knime.workbench.core,
+ org.knime.base,
+ org.knime.base.filehandling,
+ org.knime.cluster,
+ org.knime.core,
+ org.knime.core.data.uritype,
+ javax.ws.rs-api;bundle-version="2.0.1"
+Bundle-ActivationPolicy: lazy
+Export-Package: javax.ws.rs,
+ javax.ws.rs.client,
+ javax.ws.rs.core,
+ javax.ws.rs.ext,
+ org.glassfish.jersey.client,
+ org.glassfish.jersey.internal,
+ org.tudresden.unicore
+Bundle-Activator: org.tudresden.unicore.UnicoreActivator
+

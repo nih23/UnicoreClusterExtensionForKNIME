@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE knimeNode PUBLIC "-//UNIKN//DTD KNIME Node 2.0//EN" "http://www.knime.org/Node.dtd">
+<knimeNode icon="/unicoreIcon48x48.png" type="Other">
+    <name>Unicore File Integration</name>
+
+    <shortDescription>
+        Integrates file or folder from an unicore storage.
+    </shortDescription>
+
+    <fullDescription>
+        <intro>
+            This node integrates files and folders from / to Unicore storage sinks, 
+            so that they can be subsequently processed either locally or remotely 
+            by Unicore.
+        </intro>
+
+
+        <option name="Unicore Use Mode">
+            Download data from Unicore storage sinks to local directory or prepare paths for subsequent remote execution by Unicore.
+        </option>
+        <option name="Local Data Integration">
+            Location of downloaded files.
+        </option>
+        <option name="Remote Execution">
+            Shall we process S3 cloud data?
+        </option>
+    </fullDescription>
+
+	<ports>
+		<inPort name="Connection information port" index="0">
+            Port
+            object
+            containing the connection information to the server.
+        </inPort>
+        <inPort name="Filelist port" index="1">
+            Table containing the list of files that should be integrated into the workflow.
+        </inPort>
+        <outPort name="Filelist table" index="0">
+            Table containing the paths of the integrated files for either subsequent local or remote execution.
+        </outPort>
+	</ports>
+</knimeNode>
