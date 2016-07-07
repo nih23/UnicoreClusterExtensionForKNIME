@@ -24,15 +24,14 @@
    
       <extension point="org.knime.workbench.repository.nodes">
 		<node
-        category-path="/unicore"
+        category-path="/community/unicore"
         deprecated="false"
-        factory-class="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationNodeFactory"
-        id="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationNodeFactory"/>
+        factory-class="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationNodeFactory"/>
 		<node
-        category-path="/unicore"
+        after="org.tudresden.unicore.knime.filehandling.connector.UnicoreConnectionInformationNodeFactory"
+        category-path="/community/unicore"
         deprecated="false"
-        factory-class="org.tudresden.unicore.knime.filehandling.integration.UnicoreFileIntegrationNodeFactory"
-        id="org.tudresden.unicore.knime.filehandling.integration.UnicoreFileIntegrationNodeFactory"/>   
+        factory-class="org.tudresden.unicore.knime.filehandling.integration.UnicoreFileIntegrationNodeFactory"/>   
    </extension>
   
    <extension
@@ -49,7 +48,7 @@
             level-id="unicore"
             locked="true"
             name="Unicore"
-            path="/">
+            path="/community/">
       </category>
    </extension>
    <extension

@@ -34,7 +34,8 @@ import org.knime.core.node.workflow.NodeContainer.NodeContainerSettings.SplitTyp
  */
 public class UnicoreSettingsChunkPanel extends JPanel {
 
-    private final JCheckBox m_chunkExec = new JCheckBox();
+	private static final long serialVersionUID = 9033637899281349641L;
+	private final JCheckBox m_chunkExec = new JCheckBox();
     private final JComboBox m_portIndex = new JComboBox();
     private final JRadioButton m_useChunkCount = new JRadioButton();
     private final JRadioButton m_useChunkSize = new JRadioButton();

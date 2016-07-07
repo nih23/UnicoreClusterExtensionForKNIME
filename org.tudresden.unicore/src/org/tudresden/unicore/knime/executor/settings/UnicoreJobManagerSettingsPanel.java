@@ -18,6 +18,7 @@ import org.knime.core.node.workflow.NodeExecutionJobManagerPanel;
 
 public class UnicoreJobManagerSettingsPanel extends NodeExecutionJobManagerPanel {
 
+	private static final long serialVersionUID = -9110449239215031732L;
 	private final UnicoreSettingsChunkPanel m_chunkPanel;
     private final UnicoreSettingsPrefPanel m_prefsPanel;
     private final SplitType m_nodeSplitType;

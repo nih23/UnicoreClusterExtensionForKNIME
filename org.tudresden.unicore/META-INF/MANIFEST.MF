@@ -28,13 +28,13 @@ Bundle-ClassPath: .,
  lib/jaxrs-ri/ext/validation-api-1.1.0.Final.jar,
  lib/jaxrs-ri/api/javax.ws.rs-api-2.0.1.jar
 Bundle-Vendor: TU Dresden
-Require-Bundle: org.knime.workbench.core,
- org.knime.base,
- org.knime.base.filehandling,
- org.knime.cluster,
- org.knime.core,
- org.knime.core.data.uritype,
- javax.ws.rs-api;bundle-version="2.0.1"
+Require-Bundle: org.knime.workbench.core;bundle-version="[3.2.0,4.0.0)",
+ org.knime.base;bundle-version="[3.2.0,4.0.0)",
+ org.knime.base.filehandling;bundle-version="[3.2.0,4.0.0)",
+ org.knime.cluster;bundle-version="[3.2.0,4.0.0)",
+ org.knime.core;bundle-version="[3.2.0,4.0.0)",
+ org.knime.core.data.uritype;bundle-version="[3.2.0,4.0.0)",
+ javax.ws.rs-api;bundle-version="[2.0.1,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Export-Package: javax.ws.rs,
  javax.ws.rs.client,
@@ -44,4 +44,5 @@ Export-Package: javax.ws.rs,
  org.glassfish.jersey.internal,
  org.tudresden.unicore
 Bundle-Activator: org.tudresden.unicore.UnicoreActivator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 

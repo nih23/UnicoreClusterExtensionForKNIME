@@ -32,7 +32,11 @@ import org.knime.core.node.port.PortObjectSpec;
  */
 
 public class UnicoreSettingsPrefPanel extends JPanel {
-    private UnicoreJobManagerSettings m_lastTabSettings = null;
+    
+	private static final long serialVersionUID = 257788087181622668L;
+
+
+	private UnicoreJobManagerSettings m_lastTabSettings = null;
 
 	
 	private final JCheckBox m_usePreferences = new JCheckBox();

@@ -18,7 +18,6 @@ import org.knime.core.node.NodeLogger;
 import org.tudresden.unicore.knime.filehandling.UnicoreConnection;
 import org.tudresden.unicore.knime.filehandling.UnicoreConnectionInformation;
 import org.tudresden.unicore.knime.filehandling.UnicoreRemoteFile;
-import org.tudresden.unicore.knime.filehandling.UnicoreRemoteFileHandler;
 
 public class UnicoreRemoteFileDataCell extends DataCell implements StringValue {
 

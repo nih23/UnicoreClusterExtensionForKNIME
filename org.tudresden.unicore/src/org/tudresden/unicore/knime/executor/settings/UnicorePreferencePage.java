@@ -1,6 +1,7 @@
 package org.tudresden.unicore.knime.executor.settings;
 
 import java.io.File;
+
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;

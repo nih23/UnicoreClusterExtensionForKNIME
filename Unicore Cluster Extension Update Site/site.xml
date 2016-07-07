@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/TUD KNIME Unicore Cluster Extension_0.5.8.201607051641.jar" id="TUD KNIME Unicore Cluster Extension" version="0.5.8.201607051641"/>
+   <feature url="features/org.tudresden.features.unicore_0.5.8.qualifier.jar" id="org.tudresden.features.unicore" version="0.5.8.qualifier"/>
 </site>

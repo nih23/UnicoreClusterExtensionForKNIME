@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TUD KNIME Unicore Cluster Extension Feature</name>
+	<name>org.tudresden.features.unicore</name>
 	<comment></comment>
 	<projects>
 	</projects>
