@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.tudresden.update.unicore"
+      label="Unicore Update Site"
+      version="0.5.8.qualifier"
+      provider-name="TU Dresden">
+
+   <includes
+         id="org.tudresden.features.unicore"
+         version="0.0.0"/>
+</feature>
