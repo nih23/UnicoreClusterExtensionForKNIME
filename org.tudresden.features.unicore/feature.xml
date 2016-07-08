@@ -724,28 +724,13 @@ propagated with or for interoperation with KNIME.
    </license>
 
    <requires>
+      <import feature="org.knime.features.cluster" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.knime.features.base.filehandling" version="3.2.0" match="greaterOrEqual"/>
       <import plugin="org.glassfish.javax.json"/>
-      <import plugin="javax.ws.rs-api" version="2.0.1" match="greaterOrEqual"/>
-      <import feature="org.knime.features.cluster" version="3.2.0.v201606211353"/>
-      <import feature="org.knime.features.base.filehandling" version="3.2.0.v201607020851"/>
    </requires>
 
    <plugin
          id="org.tudresden.unicore"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="javax.ws.rs-api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.glassfish.javax.json"
          download-size="0"
          install-size="0"
          version="0.0.0"
