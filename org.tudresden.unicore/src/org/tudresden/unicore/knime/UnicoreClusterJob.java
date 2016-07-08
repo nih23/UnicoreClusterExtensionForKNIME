@@ -1063,6 +1063,10 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 	}
 
 
+	/**
+	 * this function retrieves log files resulting from remote execution and writes them into local files. 
+	 * this is required for the knime logviewer to present the logs to the user
+	 */
 	private void retrieveAndWriteLogs() {
 		try {
 			byte[] dKnimeLog;
