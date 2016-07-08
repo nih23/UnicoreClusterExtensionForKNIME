@@ -167,7 +167,7 @@ public class UnicoreRESTConnector implements UnicoreConnector {
 		byte[] downloadedObject = resp.readEntity(byte[].class);
 
 		if(resp.getStatus() == 404) {
-			LOGGER.error("Couldnt find remote file!");
+			LOGGER.warn("Couldnt find remote file " + remotePath);
 		}
 
 		LOGGER.info("file download completed " + resp.getStatus() + ": " + resp.getStatusInfo());

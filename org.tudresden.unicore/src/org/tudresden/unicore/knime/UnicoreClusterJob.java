@@ -55,6 +55,10 @@ import org.tudresden.unicore.knime.filehandling.integration.UnicoreRemoteFileDat
  */
 public class UnicoreClusterJob extends AbstractClusterJob {
 
+	private File m_fKnimeLog;
+	private File m_fStdoutLog;
+	private File m_fStderrLog;
+	
 	private static final NodeLogger LOGGER = NodeLogger.getLogger(UnicoreClusterJob.class);
 
 	private List<JsonObjectBuilder> m_stagingInformation;
@@ -660,6 +664,9 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 		m_unicore_jobState = m_unicore_connector.getStateOfJob(m_unicore_job_id);
 		m_unicore_connector.closeConnection();
 		LOGGER.info("Job " + m_unicore_job_id + " sucessfully submitted.");
+		m_fKnimeLog = new File(getLocalJobDir() + m_unicore_job_id + "_knimelog.txt");
+		m_fStdoutLog = new File(getLocalJobDir() + m_unicore_job_id + "_stdout.txt");
+		m_fStderrLog = new File(getLocalJobDir() + m_unicore_job_id + "_stderr.txt");
 	}
 
 	private JsonObject createUnicoreJobDescription() {
@@ -743,19 +750,21 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 	@Override
 	public JobStatus waitForJobToFinish() {
 		try {
+			m_gje.jobStartsExecute(this, getChunkJobIdx(), m_fKnimeLog, m_fStdoutLog, m_fStderrLog);
 			getExecutionMonitor().setMessage("Waiting for job " + m_unicore_job_id + " to finish");
 			m_unicore_jobState = m_unicore_connector.getStateOfJob(m_unicore_job_id);
 			long t1 = System.currentTimeMillis();
 			while( (m_unicore_jobState == JobStatus.RUNNING) || (m_unicore_jobState == JobStatus.SIGNALED) ) {
 				Thread.sleep(1000); // busy waiting ftw
 				m_unicore_jobState = m_unicore_connector.getStateOfJob(m_unicore_job_id);
+				retrieveAndWriteLogs();
 				System.out.print(".");
 			}
 			System.out.println("");
 			long t2 = System.currentTimeMillis();
 			LOGGER.error("Runtime of remote job " + (t2 - t1) + " ms");
 			LOGGER.info(m_unicore_job_id + " finished with " + m_unicore_jobState.toString());
-
+			retrieveAndWriteLogs();
 			if(m_unicore_jobState == JobStatus.DONE) {
 				// download zipped workflow			
 				File localDirResultsFile = super.getLocalJobDir().getAbsoluteFile().getParentFile();
@@ -776,6 +785,7 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 			} else {
 				LOGGER.error(m_unicore_job_id + " finished in unexpected state " + m_unicore_jobState.toString());
 			}
+			m_gje.jobFinishes(this, getChunkJobIdx(), m_fKnimeLog, m_fStdoutLog, m_fStderrLog);
 			// normally we would just return m_unicore_jobState, but for debugging purposes we currently use the following code
 			switch(m_unicore_jobState) {
 			case DONE: // download files
@@ -1053,5 +1063,39 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 	}
 
 
+	private void retrieveAndWriteLogs() {
+		try {
+			byte[] dKnimeLog;
+			byte[] dStdoutLog;
+			byte[] dStderrLog;
+			
+			String pKnimeLog = "/runtimeWS/.metadata/knime/knime.log";
+			String pStdoutLog = "/stdout";
+			String pStderrLog = "/stderr";
+			
+			if(m_dataStagingEnabled) {
+				dKnimeLog = m_unicore_connector.downloadFile(m_unicore_job_id + "-uspace", pKnimeLog);
+			} else {
+				dKnimeLog = m_unicore_connector.downloadFile(m_unicore_storageSinkId, m_gje.getSettings().getRemoteRootDir() + super.getLocalJobDir().getName() + pKnimeLog);
+			}
+			dStdoutLog = m_unicore_connector.downloadFile(m_unicore_job_id + "-uspace", pStdoutLog);
+			dStderrLog = m_unicore_connector.downloadFile(m_unicore_job_id + "-uspace", pStderrLog);
+			
+			BufferedWriter wKnimeLog = new BufferedWriter( new FileWriter( m_fKnimeLog ));
+			wKnimeLog.write(new String(dKnimeLog));
+			wKnimeLog.close();
+			
+			BufferedWriter wStdoutLog = new BufferedWriter( new FileWriter( m_fStdoutLog ));
+			wStdoutLog.write(new String(dStdoutLog));
+			wStdoutLog.close();
+			
+			BufferedWriter wStderrLog = new BufferedWriter( new FileWriter( m_fStderrLog ));
+			wStderrLog.write(new String(dStderrLog));
+			wStderrLog.close();
+			
+		} catch (Exception e) {
+			
+		}
+	}
 
 }
