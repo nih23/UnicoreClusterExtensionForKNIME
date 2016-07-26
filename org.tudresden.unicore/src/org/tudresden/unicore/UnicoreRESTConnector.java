@@ -167,7 +167,7 @@ public class UnicoreRESTConnector implements UnicoreConnector {
 		byte[] downloadedObject = resp.readEntity(byte[].class);
 
 		if(resp.getStatus() == 404) {
-			LOGGER.warn("Couldnt find remote file " + remotePath);
+			// LOGGER.warn("Couldn't find remote file " + remotePath);
 		}
 
 		LOGGER.info("file download completed " + resp.getStatus() + ": " + resp.getStatusInfo());
@@ -383,7 +383,7 @@ public class UnicoreRESTConnector implements UnicoreConnector {
 		try {
 			openConnection();
 		} catch (Exception e) {
-			LOGGER.error("Can't open REST connection with Unicore gateway!", e);
+			LOGGER.error("Can't open REST connection to Unicore gateway!", e);
 		}
 
 		return m_activeClient;

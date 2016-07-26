@@ -64,6 +64,9 @@ public class UnicoreSettingsPrefPanel extends JPanel {
     
     private final JTextField m_unicore_resources_cpusPerNode = new JTextField(10);
 
+    private final JTextField m_unicore_gateway = new JTextField(15);
+    
+    private final JTextField m_unicore_site = new JTextField(10);
 
     private final JButton m_localBrowseBtn = new JButton("Browse...");
 
@@ -146,6 +149,16 @@ public class UnicoreSettingsPrefPanel extends JPanel {
         borderedBox.add(knimeArgs);
 
         // Unicore Args
+        Box unicoreGwArgs = Box.createHorizontalBox();
+        unicoreGwArgs.add(new JLabel("Gateway  "));
+        unicoreGwArgs.add(m_unicore_gateway);
+        borderedBox.add(unicoreGwArgs);
+        
+        Box unicoreGwArgs2 = Box.createHorizontalBox();
+        unicoreGwArgs2.add(new JLabel("Queue  "));
+        unicoreGwArgs2.add(m_unicore_site);
+        borderedBox.add(unicoreGwArgs2);
+        
         Box unicoreArgs = Box.createHorizontalBox();
         unicoreArgs.add(Box.createHorizontalGlue());
         //unicoreArgs.add(new JLabel("Unicore Job Preferences"));
@@ -153,6 +166,7 @@ public class UnicoreSettingsPrefPanel extends JPanel {
         unicoreArgs.add(m_unicore_resources_runtime);
         unicoreArgs.add(new JLabel("  Memory  "));
         unicoreArgs.add(m_unicore_resources_memory);
+        unicoreArgs.add(Box.createHorizontalGlue());
         borderedBox.add(unicoreArgs);
         
         Box unicoreNodeArgs = Box.createHorizontalBox();
@@ -164,16 +178,6 @@ public class UnicoreSettingsPrefPanel extends JPanel {
         borderedBox.add(Box.createVerticalStrut(5));
         borderedBox.add(unicoreNodeArgs);
         
-        /*// SGE Native Args
-        Box nativeArgs = Box.createHorizontalBox();
-        nativeArgs.add(Box.createHorizontalGlue());
-        nativeArgs.add(new JLabel(
-                "Arguments for the SGE job (native arguments):"));
-        nativeArgs.add(m_nativeArgs);
-        m_nativeArgs.setToolTipText("e.g. qsub arguments go here");
-        borderedBox.add(Box.createVerticalStrut(5));
-        borderedBox.add(nativeArgs);*/
-
         // Shared Dir (local)
         Box localDir = Box.createHorizontalBox();
         localDir.add(Box.createHorizontalGlue());
@@ -289,6 +293,8 @@ public class UnicoreSettingsPrefPanel extends JPanel {
         m_unicore_resources_memory.setEnabled(enable);
         m_unicore_resources_nodes.setEnabled(enable);
         m_unicore_resources_runtime.setEnabled(enable);
+        m_unicore_gateway.setEnabled(enable);
+        m_unicore_site.setEnabled(enable);
         
         m_invokeShellBash.setEnabled(enable);
         m_invokeShellTcsh.setEnabled(enable);
@@ -389,13 +395,12 @@ public class UnicoreSettingsPrefPanel extends JPanel {
                 .splitArgumentString(m_knimeArgs.getText().trim()));
         settings.setRemoteKnimeExecutable(m_knimePath.getText());
         settings.setLocalRootDir(new File(m_localShared.getText()));
-        
+        settings.setGateway(m_unicore_gateway.getText());
         settings.setJobCPUsPerNode(m_unicore_resources_cpusPerNode.getText());
         settings.setJobMemory(m_unicore_resources_memory.getText());
         settings.setJobNodes(m_unicore_resources_nodes.getText());
         settings.setJobRuntime(m_unicore_resources_runtime.getText());
-        
-
+        settings.setDefaultSitename(m_unicore_site.getText());
         if (m_invokeShellBash.isSelected()) {
             settings.setScriptShell(InvokeScriptShell.bash);
         } else {
@@ -435,6 +440,8 @@ public class UnicoreSettingsPrefPanel extends JPanel {
         m_knimePath.setText(settings.getRemoteKnimeExecutable());
         m_knimeArgs.setText(StringsToString(settings.getCustomKnimeArguments()));
 
+        m_unicore_gateway.setText(settings.getGateway());
+        m_unicore_site.setText(settings.getDefaultSitename());
        
         m_unicore_resources_cpusPerNode.setText(settings.getJobCPUsPerNode());
         m_unicore_resources_memory.setText(settings.getJobMemory());

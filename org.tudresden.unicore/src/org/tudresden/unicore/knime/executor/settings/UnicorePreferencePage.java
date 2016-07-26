@@ -72,30 +72,30 @@ IWorkbenchPreferencePage {
         
         m_unicore_username =
         		new SFE(UnicorePreferenceInitializer.PREF_UNICORE_USERNAME,
-                        "Username for Unicore:",
+                        "Username:",
                         getFieldEditorParent());
         
         m_unicore_password =
         		new SFE(UnicorePreferenceInitializer.PREF_UNICORE_PASSWORD,
-                        "Password for Unicore:",
+                        "Password:",
                         getFieldEditorParent());
         m_unicore_password.getTextControl(getFieldEditorParent()).setEchoChar('*') ;
         
         m_unicore_gateway =
         		new SFE(UnicorePreferenceInitializer.PREF_UNICORE_GATEWAY,
-                        "Gateway for Unicore:",
+                        "REST Gateway:",
                         getFieldEditorParent());
         
         //TODO: only provide availiable sites and let user chose
         m_unicore_storage =
         		new SFE(UnicorePreferenceInitializer.PREF_UNICORE_STORAGE,
-                        "Storage Resource for Unicore:",
+                        "Storage Resource:",
                         getFieldEditorParent());
         
         //TODO: only provide availiable sites and let user chose
         m_unicore_default_sitename =
         		new SFE(UnicorePreferenceInitializer.PREF_UNICORE_DEFAULT_SITENAME,
-                        "Default sitename for Unicore:",
+                        "Queue:",
                         getFieldEditorParent());
         
         m_localShared =
@@ -109,7 +109,7 @@ IWorkbenchPreferencePage {
                         getFieldEditorParent());
 
         m_unicore_resources_nodes = new SFE(UnicorePreferenceInitializer.PREF_UNICORE_RESOURCES_NODES,
-                "HPC Nodes",
+                "HPC Nodes per Job",
                 getFieldEditorParent());
         
         m_unicore_resources_cpusPerNode = new SFE(UnicorePreferenceInitializer.PREF_UNICORE_RESOURCES_CPUsPerNode,

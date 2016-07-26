@@ -435,7 +435,10 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 			}
 			try {
 				String line = null;
-				while ((line = iniReader.readLine()) != null) {               	
+				while ((line = iniReader.readLine()) != null) { 
+					if (line.trim().toLowerCase().contains("xmx")) {
+						continue;
+					}
 					if (line.trim().toLowerCase().startsWith("-vmargs")) {
 						containsVMargs = true;
 					}
@@ -456,6 +459,7 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 					iniWriter.write("-vmargs\n");
 				}
 				iniWriter.write("-Djava.awt.headless=true\n");
+				iniWriter.write("-Xmx" + m_gje.getSettings().getJobMemory());
 				iniWriter.close();
 				return clusterIniFile;
 			} catch (IOException e) {

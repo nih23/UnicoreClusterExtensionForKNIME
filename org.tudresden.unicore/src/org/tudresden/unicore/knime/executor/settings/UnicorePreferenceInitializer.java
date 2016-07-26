@@ -25,7 +25,7 @@ public class UnicorePreferenceInitializer extends AbstractPreferenceInitializer 
     /** Preference key: knime arguments. */
     static final String PREF_KNIME_ARGS =
             "com.knime.cluster.unicore.jobmanager.knime_arguments";
-
+    
     /** Preference key: native arguments. */
     /*static final String PREF_NATIVE_ARGS =
             "com.knime.cluster.unicore.jobmanager.unicore_native_args";*/
@@ -123,7 +123,7 @@ public class UnicorePreferenceInitializer extends AbstractPreferenceInitializer 
         settings.setJobRuntime(store.getString(PREF_UNICORE_RESOURCES_RUNTIME));
         settings.setJobMemory(store.getString(PREF_UNICORE_RESOURCES_MEMORY));
         settings.setJobNodes(store.getString(PREF_UNICORE_RESOURCES_NODES));
-        
+                
         settings.setExportPreferencesToCluster(store
                 .getBoolean(PREF_EXPORT_CLIENT_PREFERENCES));
         try {
