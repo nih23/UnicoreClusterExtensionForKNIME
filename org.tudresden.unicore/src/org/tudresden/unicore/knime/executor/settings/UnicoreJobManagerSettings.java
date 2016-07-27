@@ -19,6 +19,7 @@ public class UnicoreJobManagerSettings extends ClusterJobSplitSettings {
 	private static final String CFG_UnicoreJOB_RESOURCES_NODES = "Unicore_Resources_Nodes";
 	private static final String CFG_UnicoreJOB_RESOURCES_CPUSPERNODE = "Unicore_Resources_CPUsPerNode";
 	private static final String CFG_UnicoreJOB_GATEWAY = "Unicore_Gateway";
+	private static final String CFG_UnicoreJOB_SITE = "Unicore_Site";
 
 	private String m_unicoreUsername;
 	private String m_unicorePassword;
@@ -64,6 +65,7 @@ public class UnicoreJobManagerSettings extends ClusterJobSplitSettings {
 		m_unicoreResourcesNodes = settings.getString(CFG_UnicoreJOB_RESOURCES_NODES);
 		m_unicoreResourcesRuntime = settings.getString(CFG_UnicoreJOB_RESOURCES_RUNTIME);
 		m_unicoreGateway = settings.getString(CFG_UnicoreJOB_GATEWAY);
+		m_unicoreDefaultSitename = settings.getString(CFG_UnicoreJOB_SITE);
 	}
 
 	/**
@@ -82,6 +84,7 @@ public class UnicoreJobManagerSettings extends ClusterJobSplitSettings {
 		settings.addString(CFG_UnicoreJOB_RESOURCES_NODES, m_unicoreResourcesNodes);
 		settings.addString(CFG_UnicoreJOB_RESOURCES_RUNTIME, m_unicoreResourcesRuntime);
 		settings.addString(CFG_UnicoreJOB_GATEWAY, m_unicoreGateway);
+		settings.addString(CFG_UnicoreJOB_SITE, m_unicoreDefaultSitename);
 		
 	}
 

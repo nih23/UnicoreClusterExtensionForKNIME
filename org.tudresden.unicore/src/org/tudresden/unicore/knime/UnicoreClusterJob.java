@@ -302,7 +302,6 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 		String dataField = DATE_FORMAT.format(new Date());
 		String jobDir = new StringBuilder("").append(userRemoteDir)  
 				.append("/knimeJob_" + dataField + "/").toString();
-		//TODO: IMPLEMENT REST CALL THAT ACTUALLY CREATES THE DIRECTORY
 		return jobDir;
 	}
 
@@ -345,8 +344,6 @@ public class UnicoreClusterJob extends AbstractClusterJob {
 	 * @return the remote filename where preferences are stored in
 	 */
 	protected String getRemotePreferencesFile() {
-		// TODO: If the remote host has a different OS (for SSH) this fails!!
-		//return new File(getRemoteJobDir(), PREFERENCE_FILE).getAbsolutePath();
 		return new StringBuilder(getRemoteControlDir()).append(PREFERENCE_FILE).toString();
 	}
 

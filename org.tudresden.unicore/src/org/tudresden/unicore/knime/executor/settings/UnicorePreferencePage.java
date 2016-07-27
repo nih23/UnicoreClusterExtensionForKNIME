@@ -206,6 +206,7 @@ IWorkbenchPreferencePage {
         s.setGateway(m_unicore_gateway.getStringValue());*/
         s.setLocalRootDir(new File(m_localShared.getStringValue()));
         s.setRemoteRootDir(m_clusterShared.getStringValue());
+        s.setDefaultSitename(m_unicore_default_sitename.getStringValue());
         return s.getStatusMsg();
     }
 
