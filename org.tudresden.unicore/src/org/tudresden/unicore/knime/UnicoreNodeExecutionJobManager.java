@@ -180,12 +180,13 @@ public class UnicoreNodeExecutionJobManager extends AbstractClusterJobManager im
     public PortObjectSpec[] configure(final PortObjectSpec[] inSpecs,
             final PortObjectSpec[] nodeModelOutSpecs)
             throws InvalidSettingsException {
-
+    	return nodeModelOutSpecs;
+    	/*
         if (m_settings.splitExecution() && nodeModelOutSpecs != null) {
 
             // to each table add a column to mark failing split jobs
             PortObjectSpec[] result =
-                    new DataTableSpec[nodeModelOutSpecs.length];
+                    new PortObjectSpec[nodeModelOutSpecs.length];
             for (int i = 0; i < result.length; i++) {
                 PortObjectSpec s = nodeModelOutSpecs[i];
                 if (s == null) { // no table spec available
@@ -211,6 +212,7 @@ public class UnicoreNodeExecutionJobManager extends AbstractClusterJobManager im
         } else {
             return nodeModelOutSpecs;
         }
+        */
     }
 
 	@Override
