@@ -12,7 +12,7 @@ import org.knime.base.filehandling.remote.files.ConnectionMonitor;
 import org.knime.base.filehandling.remote.files.RemoteFile;
 import org.knime.core.node.NodeLogger;
 import org.tudresden.unicore.UnicoreConnector;
-import org.tudresden.unicore.knime.UnicoreClusterJob;
+import org.tudresden.unicore.knime.UnicoreExecutorHandler;
 
 
 /**
@@ -26,7 +26,7 @@ public class UnicoreRemoteFile extends RemoteFile<UnicoreConnection> implements 
 	 * 
 	 */
 	private static final long serialVersionUID = 7916606384957075529L;
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(UnicoreClusterJob.class);
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(UnicoreExecutorHandler.class);
 	URI m_uri;
 	String m_storage_sink;
 	String m_gateway;

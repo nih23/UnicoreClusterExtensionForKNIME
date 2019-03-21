@@ -1,5 +1,7 @@
 package org.tudresden.unicore.knime.filehandling.connector;
 
+import javax.swing.JPanel;
+
 import org.knime.core.node.NodeDialogPane;
 import org.knime.core.node.NodeFactory;
 import org.knime.core.node.NodeView;

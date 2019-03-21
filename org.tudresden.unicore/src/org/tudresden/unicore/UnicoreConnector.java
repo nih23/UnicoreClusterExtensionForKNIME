@@ -7,7 +7,8 @@ import java.util.List;
 
 import javax.json.JsonObject;
 
-import org.knime.cluster.executor.AbstractClusterJobManager;
+import org.knime.cluster.util.JobStatus;
+
 
 /**
  * general interface for communication with unicore/unity systems
@@ -98,7 +99,7 @@ public interface UnicoreConnector {
 	 * @param jobId
 	 * @return
 	 */
-	public AbstractClusterJobManager.JobStatus getStateOfJob(String jobId) throws Exception;
+	public JobStatus getStateOfJob(String jobId) throws Exception;
 	
 	public List<String> getListOfAllJobIDs() throws Exception;
 	

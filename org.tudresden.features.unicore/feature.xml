@@ -2,11 +2,16 @@
 <feature
       id="org.tudresden.features.unicore"
       label="Unicore Cluster Extension"
-      version="0.5.8.qualifier"
+      version="0.6.0.qualifier"
       provider-name="TU Dresden">
 
    <description url="https://tu-dresden.de/">
-      This extension enables KNIME 3.2 and newer to execute (sub-)workflows remotely on cluster systems with Unicore and Unity. Hereby, a single subworkflow can be executed remotely. In case of data-parallel workflows it is also possible to split input to the workflow into several non-overlapping chunks with each chunk being submitted as seperate job to unicores job queue.
+      This extension enables KNIME 3.4 and newer to execute (sub-)workflows
+remotely on cluster systems with Unicore and Unity. Hereby, a
+single subworkflow can be executed remotely. In case of data-parallel
+workflows it is also possible to split input to the workflow
+into several non-overlapping chunks with each chunk being submitted
+as seperate job to unicores job queue.
    </description>
 
    <license url="https://www.gnu.org/licenses/gpl-3.0.en.html">

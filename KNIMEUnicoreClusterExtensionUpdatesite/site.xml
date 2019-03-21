@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="KNIME Unicore Clusterextension">
+      &quot;&quot;
+   </description>
+   <feature url="features/org.tudresden.features.unicore_0.6.0.201708111414.jar" id="org.tudresden.features.unicore" version="0.6.0.201708111414"/>
+</site>

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-   <extension point="org.knime.core.NodeExecutionJobManagerFactory">
-      <NodeExecutionJobManagerFactory
-            JobManagerFactory="org.tudresden.unicore.knime.UnicoreNodeExecutionJobManagerFactory">
-      </NodeExecutionJobManagerFactory>
-   </extension>
-   
    <extension point="org.eclipse.ui.preferencePages">
       <page
             category="org.knime.workbench.ui.preferences"
@@ -32,6 +26,15 @@
         category-path="/community/unicore"
         deprecated="false"
         factory-class="org.tudresden.unicore.knime.filehandling.integration.UnicoreFileIntegrationNodeFactory"/>   
+   </extension>
+  
+   <extension
+         point="org.knime.cluster">
+      <integration
+            factory="org.tudresden.unicore.knime.UnicoreExecutorFactory"
+            id="org.knime.cluster.unicore"
+            name="Unicore Executor">
+      </integration>
    </extension>
   
    <extension

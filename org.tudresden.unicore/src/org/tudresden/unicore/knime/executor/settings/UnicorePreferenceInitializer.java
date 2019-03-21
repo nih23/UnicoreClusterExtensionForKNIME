@@ -4,9 +4,6 @@ import java.io.File;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.knime.cluster.executor.settings.ClusterJobExecSettings;
-import org.knime.cluster.executor.settings.ClusterJobExecSettings.DeleteTempFilePolicy;
-import org.knime.cluster.executor.settings.ClusterJobSplitSettings;
 import org.knime.core.node.NodeLogger;
 import org.tudresden.unicore.UnicoreActivator;
 
@@ -109,11 +106,11 @@ public class UnicorePreferenceInitializer extends AbstractPreferenceInitializer 
             final UnicoreJobManagerSettings settings) {
 
         IPreferenceStore store = getUnicorePreferenceStore();
-        settings.setRemoteRootDir(store.getString(PREF_CLUSTER_SHARED));
-        settings.setCustomKnimeArguments(ClusterJobSplitSettings
-                .splitArgumentString(store.getString(PREF_KNIME_ARGS)));
-        settings.setRemoteKnimeExecutable(store.getString(PREF_KNIME_EXEC));
-        settings.setLocalRootDir(new File(store.getString(PREF_LOCAL_SHARED)));
+        /*settings.setRemoteExecDir(store.getString(PREF_CLUSTER_SHARED));
+        //settings.setCustomKnimeArguments(ClusterJobSplitSettings
+        //        .splitArgumentString(store.getString(PREF_KNIME_ARGS)));
+        //settings.setRemoteKnimeExecutable(store.getString(PREF_KNIME_EXEC));
+        //settings.setLocalRootDir(new File(store.getString(PREF_LOCAL_SHARED)));
         settings.setStorage(store.getString(PREF_UNICORE_STORAGE));
         settings.setDefaultSitename(store.getString(PREF_UNICORE_DEFAULT_SITENAME));
         settings.setUsername(store.getString(PREF_UNICORE_USERNAME));
@@ -122,30 +119,7 @@ public class UnicorePreferenceInitializer extends AbstractPreferenceInitializer 
         settings.setJobCPUsPerNode(store.getString(PREF_UNICORE_RESOURCES_CPUsPerNode));
         settings.setJobRuntime(store.getString(PREF_UNICORE_RESOURCES_RUNTIME));
         settings.setJobMemory(store.getString(PREF_UNICORE_RESOURCES_MEMORY));
-        settings.setJobNodes(store.getString(PREF_UNICORE_RESOURCES_NODES));
-                
-        settings.setExportPreferencesToCluster(store
-                .getBoolean(PREF_EXPORT_CLIENT_PREFERENCES));
-        try {
-            settings.setScriptShell(ClusterJobExecSettings.InvokeScriptShell
-                    .valueOf(store.getString(PREF_INVOKE_SHELL)));
-        } catch (IllegalArgumentException iae) {
-            settings
-                    .setScriptShell(ClusterJobSplitSettings.DEFAULT_INVOKE_SCRIPT_SHELL);
-        }
-        String delString = store.getString(PREF_DELETE_TEMP_FILE_POLICY);
-        if (DeleteTempFilePolicy.IfJobSucceeds.name().equals(delString)) {
-            settings
-                    .setDeleteTempFilePolicy(DeleteTempFilePolicy.IfJobSucceeds);
-        } else if (DeleteTempFilePolicy.Always.name().equals(delString)) {
-            settings.setDeleteTempFilePolicy(DeleteTempFilePolicy.Always);
-        } else if (DeleteTempFilePolicy.Never.name().equals(delString)) {
-            settings.setDeleteTempFilePolicy(DeleteTempFilePolicy.Never);
-        } else {
-            NodeLogger.getLogger(UnicorePreferencePage.class).warn(
-                    "No delete temp file policy selected");
-            settings.setDeleteTempFilePolicy(DeleteTempFilePolicy.Always);
-        }
+        settings.setJobNodes(store.getString(PREF_UNICORE_RESOURCES_NODES));*/
     }
 
     /**
@@ -172,10 +146,6 @@ public class UnicorePreferenceInitializer extends AbstractPreferenceInitializer 
         store.setDefault(PREF_KNIME_EXEC, "");
         store.setDefault(PREF_LOCAL_SHARED, "");
         store.setDefault(PREF_EXPORT_CLIENT_PREFERENCES, true);
-        store.setDefault(PREF_INVOKE_SHELL,
-                UnicoreJobManagerSettings.DEFAULT_INVOKE_SCRIPT_SHELL.name());
-        store.setDefault(PREF_DELETE_TEMP_FILE_POLICY,
-                DeleteTempFilePolicy.Always.name());
     }
 
 }

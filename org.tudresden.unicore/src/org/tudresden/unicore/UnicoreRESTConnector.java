@@ -27,9 +27,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
-import org.knime.cluster.executor.AbstractClusterJobManager;
 import org.knime.core.node.InvalidSettingsException;
 import org.knime.core.node.NodeLogger;
+
+import org.knime.cluster.util.JobStatus;
 
 /**
  * REST connector to unicore/unity remote server 
@@ -144,7 +145,7 @@ public class UnicoreRESTConnector implements UnicoreConnector {
 		LOGGER.info("uploading " + fileToUpload.getName() + " via unicore REST interface");
 		WebTarget target = getClient().target(getUnicoreBaseURI()).path("storages").path(storageSinkId)
 				.path("files")
-				.path(remotePath)
+				//.path(remotePath)
 				.path(fileToUpload.getName());
 		Response resp = target.request(MediaType.APPLICATION_OCTET_STREAM)
 				.put(Entity.entity(new FileInputStream(fileToUpload), MediaType.APPLICATION_OCTET_STREAM));
@@ -205,7 +206,7 @@ public class UnicoreRESTConnector implements UnicoreConnector {
 	 * @throws Exception 
 	 */
 	@Override
-	public AbstractClusterJobManager.JobStatus getStateOfJob(String jobId) throws Exception {
+	public JobStatus getStateOfJob(String jobId) throws Exception {
 		WebTarget target = getClient().target(getUnicoreBaseURI());
 		Response resp = target.path("jobs").path(jobId).request(MediaType.APPLICATION_JSON).get();
 		LOGGER.info("jobs " + resp.getStatus() + ": " + resp.getStatusInfo());
@@ -223,31 +224,31 @@ public class UnicoreRESTConnector implements UnicoreConnector {
 		LOGGER.info("Status of " + jobId + " is " + jobStatus);
 		switch (jobStatus) {
 		case "SUCCESSFUL":
-			return AbstractClusterJobManager.JobStatus.DONE;
+			return JobStatus.FINISHED;
 		case "STAGINGIN":
-			return AbstractClusterJobManager.JobStatus.SIGNALED;
+			return JobStatus.RUNNING;
 		case "STAGINGOUT":
-			return AbstractClusterJobManager.JobStatus.SIGNALED;
+			return JobStatus.RUNNING;
 		case "RUNNING":
-			return AbstractClusterJobManager.JobStatus.RUNNING;
+			return JobStatus.RUNNING;
 		case "READY":
-			return AbstractClusterJobManager.JobStatus.SIGNALED;
+			return JobStatus.RUNNING;
 		case "QUEUED":
-			return AbstractClusterJobManager.JobStatus.SIGNALED;
+			return JobStatus.QUEUED;
 		case "UNDEFINED":
 			//TODO: how should we realize proper handling of this state?
-			return AbstractClusterJobManager.JobStatus.RUNNING;
+			return JobStatus.UNKNOWN;
 		case "FAILED":
 			JsonArray log = jobProperties.getJsonArray("log");
 			JsonString lst = log.getJsonString(log.size()-1);
 			LOGGER.error(lst);
-			return AbstractClusterJobManager.JobStatus.ERROR;
+			return JobStatus.FAILED;
 		}
 
 		JsonArray log = jobProperties.getJsonArray("log");
 		JsonString lst = log.getJsonString(log.size()-1);
 		LOGGER.error(lst);
-		return AbstractClusterJobManager.JobStatus.ID_UNKNOWN;
+		return JobStatus.UNKNOWN;
 	}
 
 	public void startJob(String jobId, String jobDescription) throws Exception {
@@ -391,7 +392,7 @@ public class UnicoreRESTConnector implements UnicoreConnector {
 
 	@Override
 	public List<String> listFiles(String storageSinkId, String directory) throws Exception {
-		// /storages/{id}/fi7les/{filePath}
+		// /storages/{id}/files/{filePath}
 		LinkedList<String> availStorages = new LinkedList<String>();
 		if(directory.equals("")) {
 			directory = "/";

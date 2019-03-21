@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.knime.base.filehandling.remote.connectioninformation.node.ConnectionInformationNodeModel;
 import org.knime.base.filehandling.remote.files.Protocol;
+import org.knime.cluster.ClusterConfigurationRO;
+import org.knime.cluster.ClusterConfigurationRepository;
 import org.knime.core.node.CanceledExecutionException;
 import org.knime.core.node.ExecutionContext;
 import org.knime.core.node.ExecutionMonitor;
@@ -14,6 +16,7 @@ import org.knime.core.node.NodeSettingsWO;
 import org.knime.core.node.defaultnodesettings.SettingsModelString;
 import org.knime.core.node.port.PortObject;
 import org.knime.core.node.port.PortObjectSpec;
+import org.tudresden.unicore.knime.executor.settings.UnicoreExecutorConfiguration;
 import org.tudresden.unicore.knime.executor.settings.UnicoreJobManagerSettings;
 import org.tudresden.unicore.knime.executor.settings.UnicorePreferenceInitializer;
 import org.tudresden.unicore.knime.filehandling.UnicoreConnectionInformation;
@@ -28,9 +31,12 @@ public class UnicoreConnectionInformationNodeModel extends ConnectionInformation
     private final Protocol m_protocol;
 
     private UnicoreConnectionInformationConfiguration m_configuration;
-
-    static final String P_User = "prop_unicore_user";
-    static final String P_Pass = "prop_unicore_password";
+    private UnicoreExecutorConfiguration m_clusterConfig;
+    
+    static final String P_ClusterConfig = "NodeProperty_Cluster_Configuration";
+    
+    SettingsModelString m_settings_clusterConfig_name;
+ /*   static final String P_Pass = "prop_unicore_password";
     static final String P_GW = "prop_unicore_gateway";
     static final String P_Queue = "prop_unicore_queue";
     static final String P_Site = "prop_unicore_site";
@@ -39,7 +45,7 @@ public class UnicoreConnectionInformationNodeModel extends ConnectionInformation
     private final SettingsModelString m_settings_pass; // = new SettingsModelString(P_Pass, null);
     private final SettingsModelString m_settings_gw; // = new SettingsModelString(P_GW, null);
     private final SettingsModelString m_settings_queue; // = new SettingsModelString(P_Queue, null);
-    private final SettingsModelString m_settings_site; // = new SettingsModelString(P_Site, null);
+    private final SettingsModelString m_settings_site; // = new SettingsModelString(P_Site, null);*/
    
     /**
      * Constructor for the node model.
@@ -49,17 +55,7 @@ public class UnicoreConnectionInformationNodeModel extends ConnectionInformation
     public UnicoreConnectionInformationNodeModel(final Protocol protocol) {
     	super(protocol);
         m_protocol = protocol;
-        
-        UnicoreJobManagerSettings prefs = new UnicoreJobManagerSettings();
-        UnicorePreferenceInitializer.getSettingsFromPreferences(prefs);
-        
-        
-        m_settings_user = new SettingsModelString(P_User, prefs.getUsername());
-        m_settings_pass = new SettingsModelString(P_Pass, prefs.getPassword());
-        m_settings_gw = new SettingsModelString(P_GW, prefs.getGateway());
-        m_settings_queue = new SettingsModelString(P_Queue, prefs.getDefaultSitename());
-        m_settings_site = new SettingsModelString(P_Site, prefs.getStorage());
-
+        m_settings_clusterConfig_name = new SettingsModelString(P_ClusterConfig, "");
     }
     
     /**
@@ -84,12 +80,7 @@ public class UnicoreConnectionInformationNodeModel extends ConnectionInformation
     @Override
     protected void saveSettingsTo(final NodeSettingsWO settings) {
     		super.saveSettingsTo(settings);
-    		
-    		m_settings_user.saveSettingsTo(settings);
-    		m_settings_pass.saveSettingsTo(settings);
-    		m_settings_gw.saveSettingsTo(settings);
-    		m_settings_queue.saveSettingsTo(settings);
-    		m_settings_site.saveSettingsTo(settings);
+    		m_settings_clusterConfig_name.saveSettingsTo(settings);
     }
     
     private String getHostFromGW(String gw) {
@@ -104,25 +95,26 @@ public class UnicoreConnectionInformationNodeModel extends ConnectionInformation
     @Override
     protected void loadValidatedSettingsFrom(final NodeSettingsRO settings) throws InvalidSettingsException {
         // retrieve information from knime preferences pane.
-        UnicoreJobManagerSettings prefs = new UnicoreJobManagerSettings();
-        UnicorePreferenceInitializer.getSettingsFromPreferences(prefs);
+        String configName = settings.getString(P_ClusterConfig);
+        m_settings_clusterConfig_name.setStringValue(configName);
         
-        final UnicoreConnectionInformationConfiguration config = new UnicoreConnectionInformationConfiguration(m_protocol, prefs.getRemoteRootDir(), prefs.getStorage());
+        ClusterConfigurationRO clusterConfig = ClusterConfigurationRepository.getRepository().getConfiguration(configName);
+        
+        if(!(clusterConfig instanceof UnicoreExecutorConfiguration))
+        	throw new InvalidSettingsException("Expected an Unicore Cluster Configuration");
+        
+        UnicoreExecutorConfiguration ucc = (UnicoreExecutorConfiguration)clusterConfig; 
+        final UnicoreConnectionInformationConfiguration config = new UnicoreConnectionInformationConfiguration(m_protocol, "", UnicoreJobManagerSettings.CFG_UnicoreJOB_STORAGE);
         config.load(settings);
-        config.setUser(prefs.getUsername());
-        config.setPassword(prefs.getPassword());
+        config.setUser(ucc.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_Username));
+        config.setPassword(ucc.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_Password));
+        config.setHost(ucc.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_GATEWAY));
         
-        
-        config.setHost(getHostFromGW(prefs.getGateway()));
         config.setAuthenticationmethod("password");
+        
         m_configuration = config;
-        
-        
-		m_settings_user.loadSettingsFrom(settings);
-		m_settings_pass.loadSettingsFrom(settings);
-		m_settings_gw.loadSettingsFrom(settings);
-		m_settings_queue.loadSettingsFrom(settings);
-		m_settings_site.loadSettingsFrom(settings);
+        m_clusterConfig = ucc;
+
     }
 
     /**
@@ -140,19 +132,19 @@ public class UnicoreConnectionInformationNodeModel extends ConnectionInformation
      * @throws InvalidSettingsException ...
      */
     public UnicoreConnectionInformationPortObjectSpec createSpec() throws InvalidSettingsException {
-        if (m_configuration == null || m_configuration.getHost() == null) {
+        if (m_configuration == null || m_clusterConfig == null) {
             throw new InvalidSettingsException("No configuration available");
         }
         
  
         // integrate settings into configuration
-        m_configuration.setUser(m_settings_user.getStringValue());
-        m_configuration.setPassword(m_settings_pass.getStringValue());
-        m_configuration.setHost(getHostFromGW(m_settings_gw.getStringValue()));
+        m_configuration.setUser(m_clusterConfig.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_Username));
+        m_configuration.setPassword(m_clusterConfig.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_Password));
+        m_configuration.setHost(getHostFromGW(m_clusterConfig.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_GATEWAY)));
         m_configuration.setAuthenticationmethod("password");
-        m_configuration.setQueue(m_settings_queue.getStringValue());
-        m_configuration.setGateway(m_settings_gw.getStringValue());
-        m_configuration.setStorageSite(m_settings_site.getStringValue());
+        m_configuration.setQueue(m_clusterConfig.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_SITE));
+        m_configuration.setGateway(m_clusterConfig.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_GATEWAY));
+        m_configuration.setStorageSite(m_clusterConfig.getSetting(UnicoreJobManagerSettings.CFG_UnicoreJOB_STORAGE));
         
         
         final UnicoreConnectionInformation connectionInformation =

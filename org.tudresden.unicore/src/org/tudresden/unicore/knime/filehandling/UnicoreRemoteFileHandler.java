@@ -8,8 +8,10 @@ import org.knime.base.filehandling.remote.files.Protocol;
 import org.knime.base.filehandling.remote.files.RemoteFile;
 import org.knime.base.filehandling.remote.files.RemoteFileHandler;
 import org.knime.core.node.NodeLogger;
-import org.tudresden.unicore.knime.UnicoreClusterJob;
+import org.tudresden.unicore.knime.UnicoreExecutorHandler;
+//import org.tudresden.unicore.knime.UnicoreClusterJob;
 import org.tudresden.unicore.knime.executor.settings.UnicoreJobManagerSettings;
+//import org.tudresden.unicore.knime.executor.settings.UnicorePreferenceInitializer;
 import org.tudresden.unicore.knime.executor.settings.UnicorePreferenceInitializer;
 
 /**
@@ -19,7 +21,7 @@ import org.tudresden.unicore.knime.executor.settings.UnicorePreferenceInitialize
  */
 public class UnicoreRemoteFileHandler implements RemoteFileHandler<UnicoreConnection> {
 
-	private static final NodeLogger LOGGER = NodeLogger.getLogger(UnicoreClusterJob.class);
+	private static final NodeLogger LOGGER = NodeLogger.getLogger(UnicoreExecutorHandler.class);
 	public static final Protocol PROTOCOL = new Protocol("u6", 80, false, false, false, false, true, true, true, false);
 	//public static final Protocol PROTOCOL8080 = new Protocol("u6", 8080, false, false, false, false, false, false, false, false);
 	
